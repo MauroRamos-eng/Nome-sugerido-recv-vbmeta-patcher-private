@@ -18,9 +18,12 @@ jobs:
       - name: Criar pacote miniAP.tar.md5
         run: |
           mkdir output
+          # Cria o arquivo TAR com recovery e vbmeta
           tar -H ustar -c recovery.img.lz4 vbmeta.img.lz4 > output/miniAP.tar
-          md5sum output/miniAP.tar | awk '{print $1}' > output/miniAP.tar.md5
-          cat output/miniAP.tar >> output/miniAP.tar.md5
+          # Gera o checksum MD5 (apenas para verificação)
+          md5sum output/miniAP.tar > output/checksum.txt
+          # Renomeia o arquivo TAR para .tar.md5 (formato que o Odin aceita)
+          mv output/miniAP.tar output/miniAP.tar.md5
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
