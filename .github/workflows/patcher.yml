@@ -23,7 +23,7 @@ jobs:
           cat output/miniAP.tar >> output/miniAP.tar.md5
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: miniAP
           path: output/miniAP.tar.md5
