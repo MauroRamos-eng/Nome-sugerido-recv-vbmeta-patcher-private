@@ -15,12 +15,12 @@ jobs:
       - name: List files
         run: ls -lh
 
-      - name: Criar pacote miniAP.tar.md5
+	- name: Criar pacote miniAP.tar.md5
         run: |
           mkdir output
           tar -H ustar -c recovery.img.lz4 vbmeta.img.lz4 > output/miniAP.tar
-          md5sum output/miniAP.tar | awk '{print $1}' > output/miniAP.tar.md5
-          cat output/miniAP.tar >> output/miniAP.tar.md5
+          md5sum output/miniAP.tar | awk '{print $1}' > output/checksum.txt
+          mv output/miniAP.tar output/miniAP.tar.md5
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
