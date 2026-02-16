@@ -1,0 +1,29 @@
+name: RECOVERY/VBMETA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: List files
+        run: ls -lh
+
+      - name: Criar pacote miniAP.tar.md5
+        run: |
+          mkdir output
+          tar -H ustar -c recovery.img.lz4 vbmeta.img.lz4 > output/miniAP.tar
+          md5sum output/miniAP.tar | awk '{print $1}' > output/miniAP.tar.md5
+          cat output/miniAP.tar >> output/miniAP.tar.md5
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: miniAP
+          path: output/miniAP.tar.md5
